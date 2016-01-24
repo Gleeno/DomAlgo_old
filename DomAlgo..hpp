@@ -11,6 +11,5 @@
 //websockets callbacks
 
 
-
 #endif	/* DOMALGO__HPP */
 

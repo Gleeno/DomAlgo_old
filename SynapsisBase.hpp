@@ -11,17 +11,17 @@
 #include <fstream>
 #include <cerrno>
 #include "Log.hpp"
-#include "Synapsis/json/json.h"
+#include <json/json.h>
+#include "Synapsis/message/en.hpp"
 class SynapsisBase {
 public:
     SynapsisBase();
     SynapsisBase(const SynapsisBase& orig);
     virtual ~SynapsisBase();
     std::string getContFromFile(std::string source);
-    Json::Value getJsonFromFile(std::string source);
-    Json::Value getJson(std::string* source);
+    static Json::Value getJson(char type,std::string* sourceOrPath);
     Json::Value getSettingsRaw();
-private:
+protected:
     Json::Value settingsRaw;
 };
 

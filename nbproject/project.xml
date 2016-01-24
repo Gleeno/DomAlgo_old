@@ -6,7 +6,7 @@
             <name>DomAlgo</name>
             <c-extensions/>
             <cpp-extensions>cpp</cpp-extensions>
-            <header-extensions>h,hpp</header-extensions>
+            <header-extensions>hpp</header-extensions>
             <sourceEncoding>UTF-8</sourceEncoding>
             <make-dep-projects/>
             <sourceRootList>
@@ -19,6 +19,10 @@
                 </confElem>
                 <confElem>
                     <name>Release</name>
+                    <type>1</type>
+                </confElem>
+                <confElem>
+                    <name>arm</name>
                     <type>1</type>
                 </confElem>
             </confList>

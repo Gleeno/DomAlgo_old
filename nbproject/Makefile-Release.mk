@@ -35,9 +35,9 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/Camera.o \
 	${OBJECTDIR}/Log.o \
 	${OBJECTDIR}/Synapsis.o \
-	${OBJECTDIR}/Synapsis/json/jsoncpp.o \
 	${OBJECTDIR}/SynapsisBase.o \
 	${OBJECTDIR}/main.o
 
@@ -56,7 +56,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-lboost_system -lboost_thread `pkg-config --libs libwebsockets`  
+LDLIBSOPTIONS=-lboost_system -lboost_thread `pkg-config --libs libwebsockets` `pkg-config --libs opencv` -ljsoncpp  
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -66,30 +66,30 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/domalgo: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/domalgo ${OBJECTFILES} ${LDLIBSOPTIONS}
 
+${OBJECTDIR}/Camera.o: Camera.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 `pkg-config --cflags libwebsockets` `pkg-config --cflags opencv` -std=c++11  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Camera.o Camera.cpp
+
 ${OBJECTDIR}/Log.o: Log.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 `pkg-config --cflags libwebsockets` -std=c++11  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Log.o Log.cpp
+	$(COMPILE.cc) -O2 `pkg-config --cflags libwebsockets` `pkg-config --cflags opencv` -std=c++11  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Log.o Log.cpp
 
 ${OBJECTDIR}/Synapsis.o: Synapsis.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 `pkg-config --cflags libwebsockets` -std=c++11  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Synapsis.o Synapsis.cpp
-
-${OBJECTDIR}/Synapsis/json/jsoncpp.o: Synapsis/json/jsoncpp.cpp 
-	${MKDIR} -p ${OBJECTDIR}/Synapsis/json
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 `pkg-config --cflags libwebsockets` -std=c++11  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Synapsis/json/jsoncpp.o Synapsis/json/jsoncpp.cpp
+	$(COMPILE.cc) -O2 `pkg-config --cflags libwebsockets` `pkg-config --cflags opencv` -std=c++11  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Synapsis.o Synapsis.cpp
 
 ${OBJECTDIR}/SynapsisBase.o: SynapsisBase.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 `pkg-config --cflags libwebsockets` -std=c++11  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/SynapsisBase.o SynapsisBase.cpp
+	$(COMPILE.cc) -O2 `pkg-config --cflags libwebsockets` `pkg-config --cflags opencv` -std=c++11  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/SynapsisBase.o SynapsisBase.cpp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 `pkg-config --cflags libwebsockets` -std=c++11  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -O2 `pkg-config --cflags libwebsockets` `pkg-config --cflags opencv` -std=c++11  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
 
 # Subprojects
 .build-subprojects:

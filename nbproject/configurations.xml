@@ -4,14 +4,11 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>Camera.hpp</itemPath>
       <itemPath>DomAlgo..hpp</itemPath>
       <itemPath>Log.hpp</itemPath>
       <itemPath>Synapsis.hpp</itemPath>
       <itemPath>SynapsisBase.hpp</itemPath>
-      <itemPath>Synapsis/json/json-forwards.h</itemPath>
-      <itemPath>Synapsis/json/json.h</itemPath>
-    </logicalFolder>
-    <logicalFolder name="json" displayName="json" projectFiles="true">
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -20,10 +17,10 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>Camera.cpp</itemPath>
       <itemPath>Log.cpp</itemPath>
       <itemPath>Synapsis.cpp</itemPath>
       <itemPath>SynapsisBase.cpp</itemPath>
-      <itemPath>Synapsis/json/jsoncpp.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -61,6 +58,10 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="Camera.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Camera.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="DomAlgo..hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Log.cpp" ex="false" tool="1" flavor2="0">
@@ -70,12 +71,6 @@
       <item path="Synapsis.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Synapsis.hpp" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Synapsis/json/json-forwards.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Synapsis/json/json.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Synapsis/json/jsoncpp.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="SynapsisBase.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -110,9 +105,15 @@
             <linkerLibLibItem>boost_system</linkerLibLibItem>
             <linkerLibLibItem>boost_thread</linkerLibLibItem>
             <linkerOptionItem>`pkg-config --libs libwebsockets`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs opencv`</linkerOptionItem>
+            <linkerLibLibItem>jsoncpp</linkerLibLibItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="Camera.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Camera.hpp" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="DomAlgo..hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Log.cpp" ex="false" tool="1" flavor2="0">
@@ -123,17 +124,73 @@
       </item>
       <item path="Synapsis.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Synapsis/json/json-forwards.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Synapsis/json/json.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Synapsis/json/jsoncpp.cpp" ex="false" tool="1" flavor2="0">
-      </item>
       <item path="SynapsisBase.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="SynapsisBase.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+    </conf>
+    <conf name="arm" type="1">
+      <toolsSet>
+        <compilerSet>arm|GNU</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>true</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+          <standard>8</standard>
+          <incDir>
+            <pElem>/usr/arm-linux-gnueabihf/include/</pElem>
+          </incDir>
+          <incFile>
+            <pElem>/usr/arm-linux-gnueabihf/include/libwebsockets.h</pElem>
+          </incFile>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+        <linkerTool>
+          <linkerAddLib>
+            <pElem>/lib/arm-linux-gnueabihf</pElem>
+            <pElem>/usr/arm-linux-gnueabihf/lib</pElem>
+            <pElem>/usr/arm-linux-gnueabihf/libsf</pElem>
+          </linkerAddLib>
+          <linkerLibItems>
+            <linkerLibLibItem>websockets</linkerLibLibItem>
+            <linkerLibLibItem>opencv_core</linkerLibLibItem>
+            <linkerLibLibItem>opencv_video</linkerLibLibItem>
+            <linkerLibLibItem>jsoncpp</linkerLibLibItem>
+          </linkerLibItems>
+          <commandLine>-lopencv_imgproc</commandLine>
+        </linkerTool>
+      </compileType>
+      <item path="Camera.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Camera.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="DomAlgo..hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Log.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Log.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Synapsis.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="Synapsis.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SynapsisBase.cpp" ex="false" tool="1" flavor2="8">
+      </item>
+      <item path="SynapsisBase.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="main.cpp" ex="false" tool="1" flavor2="8">
       </item>
     </conf>
   </confs>

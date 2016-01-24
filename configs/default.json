@@ -2,5 +2,9 @@
     "LOAD_CONFIG" : "loadConfig",
     "CONFIG_PATH" : "configs/",
     "WS_ADDRESS": "127.0.0.1",
-    "WS_PORT": 9002
+    "WS_PORT": 9002,    
+    "action": [
+            "A_GET_DATA",
+            "A_SET_DATA"
+    ]  
 }

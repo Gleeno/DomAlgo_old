@@ -1,0 +1,13 @@
+{   
+    "NAME"        : "DomAlgo",
+    "VERSION"     : "0.1",
+    "LOAD_CONFIG" : "loadConfig",
+    "CONFIG_PATH" : "configs/",
+    "WSI_ADDRESS": "127.0.0.1",
+    "WSI_PORT": 9002,
+    "WSI_PROTOCOL": "instruction_protocol",
+    "WSS_ADDRESS": "127.0.0.1",
+    "WSS_PORT": 9003,
+    "WSS_PROTOCOL": "streaming_protocol",
+    "GENERIC_CAM" : "generic_cam"
+}

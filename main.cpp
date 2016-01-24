@@ -6,13 +6,16 @@
  */
 #include "Synapsis.hpp"
 #include "Log.hpp"
-#include <boost/thread.hpp>
+#include "Camera.hpp"
 int main(int argc, char** argv) {
     lall("INIT");
-    Synapsis *mainWs = new Synapsis();
-    mainWs->connect();  
+    Synapsis *wsI = new Synapsis();
+    Synapsis * wsSensors = new Synapsis();
+    wsI->connect();  
+    wsSensors->connect("127.0.0.1",9003);
     while (1) {
-      libwebsocket_service(mainWs->context, 50);
+      lws_service(wsI->context, 50);      
+      lws_service(wsSensors->context, 50);
     }
     return 0;
 }

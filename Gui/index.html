@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="js/angular.min.js"></script>
+        <script src="js/angular-websocket.min.js"></script>
+        <script src="js/jquery-2.1.4.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/ops.js"></script>
+        <link rel="stylesheet" href="css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css"/>
+    </head>
+    <body ng-app="mainApp">
+        <div class="container" ng-controller="ctrl">
+            <div class="col-md-12"><h1>{{settings.NAME}} {{settings.VERSION}}</h1></div>
+            <div>
+            </div>
+            <div></div>
+            <div id='log'></div>
+        </div><!-- Fine container -->
+    </body>
+</html>

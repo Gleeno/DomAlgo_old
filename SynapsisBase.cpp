@@ -8,7 +8,8 @@
 #include "SynapsisBase.hpp"
 
 SynapsisBase::SynapsisBase() {
-    this->settingsRaw = this->getJsonFromFile("configs/default.json");    
+    std::string configFile = "configs/default.json";
+    this->settingsRaw = this->getJson( 'f', &configFile );
 }
 
 SynapsisBase::SynapsisBase(const SynapsisBase& orig) {
@@ -18,7 +19,7 @@ SynapsisBase::~SynapsisBase() {
 }
 
 std::string SynapsisBase::getContFromFile(std::string source) {
-    std::ifstream in(source, std::ios::in | std::ios::binary);
+  std::ifstream in(source, std::ios::in | std::ios::binary);
   if (in)
   {
     std::string contents;
@@ -32,14 +33,28 @@ std::string SynapsisBase::getContFromFile(std::string source) {
   throw(errno);
 }
 
-Json::Value SynapsisBase::getJsonFromFile(std::string source) {
-    Json::Value v;
-    Json::Reader r;
-    if(!r.parse(this->getContFromFile(source),v,false))
-        throw(errno);
-return v;    
-}
-
 Json::Value SynapsisBase::getSettingsRaw() {
     return (this->settingsRaw);
+}
+Json::Value SynapsisBase::getJson(char type, std::string* sourceOrPath){
+    Json::Value v;
+    Json::Reader r;
+    if(type == 'f') {
+        std::ifstream in(*sourceOrPath, std::ios::in | std::ios::binary);
+        if (in) {
+            std::string contents;
+            in.seekg(0, std::ios::end);
+            contents.resize(in.tellg());
+            in.seekg(0, std::ios::beg);
+            in.read(&contents[0], contents.size());
+            in.close();
+            if(!r.parse(contents,v,false))
+                throw(errno);
+        }
+    }
+    else {
+         if(!r.parse(*sourceOrPath,v,false))
+                throw(errno);
+    }
+    return v;
 }
