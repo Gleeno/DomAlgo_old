@@ -38,6 +38,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Camera.o \
 	${OBJECTDIR}/Log.o \
 	${OBJECTDIR}/Synapsis.o \
+	${OBJECTDIR}/Synapsis/sensor/Sensor.o \
 	${OBJECTDIR}/SynapsisBase.o \
 	${OBJECTDIR}/main.o
 
@@ -80,6 +81,11 @@ ${OBJECTDIR}/Synapsis.o: Synapsis.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g `pkg-config --cflags libwebsockets` -std=c++11  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Synapsis.o Synapsis.cpp
+
+${OBJECTDIR}/Synapsis/sensor/Sensor.o: Synapsis/sensor/Sensor.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Synapsis/sensor
+	${RM} "$@.d"
+	$(COMPILE.cc) -g `pkg-config --cflags libwebsockets` -std=c++11  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Synapsis/sensor/Sensor.o Synapsis/sensor/Sensor.cpp
 
 ${OBJECTDIR}/SynapsisBase.o: SynapsisBase.cpp 
 	${MKDIR} -p ${OBJECTDIR}

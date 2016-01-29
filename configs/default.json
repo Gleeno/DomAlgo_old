@@ -3,8 +3,10 @@
     "CONFIG_PATH" : "configs/",
     "WS_ADDRESS": "127.0.0.1",
     "WS_PORT": 9002,    
+    "WS_PROTOCOL": "instructiion_protocol",
     "action": [
-            "A_GET_DATA",
-            "A_SET_DATA"
+            {"A_UPDATE" : "update" },
+            {"A_GET_DATA" : "getData"},
+            {"A_SET_DATA" : "setData"}
     ]  
 }

@@ -11,8 +11,11 @@
 #include <libwebsockets.h>
 #include <string>
 #include "SynapsisBase.hpp"
+#include <vector>
+#include "Synapsis/sensor/Sensor.hpp"
+
 class Synapsis : public SynapsisBase {
-public:
+public:   
     Synapsis();
     Synapsis(const Synapsis& orig);
     virtual ~Synapsis();
@@ -34,7 +37,7 @@ public:
 private:
     std::string wsAddress;
     int wsPort;
+    static std::vector<Sensor> sensors;
 };
-
 #endif	/* SYNAPSIS_HPP */
 

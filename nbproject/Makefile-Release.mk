@@ -38,6 +38,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Camera.o \
 	${OBJECTDIR}/Log.o \
 	${OBJECTDIR}/Synapsis.o \
+	${OBJECTDIR}/Synapsis/sensor/Sensor.o \
 	${OBJECTDIR}/SynapsisBase.o \
 	${OBJECTDIR}/main.o
 
@@ -46,8 +47,8 @@ OBJECTFILES= \
 CFLAGS=
 
 # CC Compiler Flags
-CCFLAGS=-lboost_system
-CXXFLAGS=-lboost_system
+CCFLAGS=
+CXXFLAGS=
 
 # Fortran Compiler Flags
 FFLAGS=
@@ -69,27 +70,32 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/domalgo: ${OBJECTFILES}
 ${OBJECTDIR}/Camera.o: Camera.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 `pkg-config --cflags libwebsockets` `pkg-config --cflags opencv` -std=c++11  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Camera.o Camera.cpp
+	$(COMPILE.cc) -O2 -include Synapsis/sensor/Sensor.hpp `pkg-config --cflags libwebsockets` `pkg-config --cflags opencv` -std=c++11  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Camera.o Camera.cpp
 
 ${OBJECTDIR}/Log.o: Log.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 `pkg-config --cflags libwebsockets` `pkg-config --cflags opencv` -std=c++11  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Log.o Log.cpp
+	$(COMPILE.cc) -O2 -include Synapsis/sensor/Sensor.hpp `pkg-config --cflags libwebsockets` `pkg-config --cflags opencv` -std=c++11  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Log.o Log.cpp
 
 ${OBJECTDIR}/Synapsis.o: Synapsis.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 `pkg-config --cflags libwebsockets` `pkg-config --cflags opencv` -std=c++11  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Synapsis.o Synapsis.cpp
+	$(COMPILE.cc) -O2 -include Synapsis/sensor/Sensor.hpp `pkg-config --cflags libwebsockets` `pkg-config --cflags opencv` -std=c++11  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Synapsis.o Synapsis.cpp
+
+${OBJECTDIR}/Synapsis/sensor/Sensor.o: Synapsis/sensor/Sensor.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Synapsis/sensor
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -include Synapsis/sensor/Sensor.hpp `pkg-config --cflags libwebsockets` `pkg-config --cflags opencv` -std=c++11  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Synapsis/sensor/Sensor.o Synapsis/sensor/Sensor.cpp
 
 ${OBJECTDIR}/SynapsisBase.o: SynapsisBase.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 `pkg-config --cflags libwebsockets` `pkg-config --cflags opencv` -std=c++11  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/SynapsisBase.o SynapsisBase.cpp
+	$(COMPILE.cc) -O2 -include Synapsis/sensor/Sensor.hpp `pkg-config --cflags libwebsockets` `pkg-config --cflags opencv` -std=c++11  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/SynapsisBase.o SynapsisBase.cpp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 `pkg-config --cflags libwebsockets` `pkg-config --cflags opencv` -std=c++11  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -O2 -include Synapsis/sensor/Sensor.hpp `pkg-config --cflags libwebsockets` `pkg-config --cflags opencv` -std=c++11  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
 
 # Subprojects
 .build-subprojects:

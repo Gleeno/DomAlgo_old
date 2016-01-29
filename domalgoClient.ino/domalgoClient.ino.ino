@@ -75,10 +75,7 @@ void loop() {
       Serial.println(data);
     }
     
-    // capture the value of analog 1, send it along
-    pinMode(1, INPUT);
-    data = String(analogRead(1));
-    
+    data = String("{ action : sensorInit }");
     webSocketClient.sendData(data);
     
   } else {
