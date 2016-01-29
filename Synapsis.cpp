@@ -6,7 +6,7 @@
  */
 
 #include "Synapsis.hpp"
-
+std::vector<Sensor> Synapsis::sensors;
 Synapsis::Synapsis() {
 }
 
@@ -65,13 +65,12 @@ int Synapsis::connect(std::string address, int port){
   int resultLen;
   unsigned char * data;
   int dataW;
-  switch (reason){
-    
+  switch (reason){    
     case LWS_CALLBACK_ESTABLISHED:
       l(L_CONNECTED);
       break;
     case LWS_CALLBACK_RECEIVE:
-      data = parseInstruction(&in, &resultState, &resultLen);      
+      data = parseInstruction(&in, &resultState, &resultLen);  
       if(resultState == 1) {
          dataW = lws_write(wsi, &data[LWS_SEND_BUFFER_PRE_PADDING], resultLen, LWS_WRITE_TEXT);  
          lall( L_DATA_SENT  +  dataW );
@@ -95,14 +94,16 @@ int Synapsis::connect(std::string address, int port){
         
      return 0;
 }
-
+ 
 unsigned char* Synapsis::parseInstruction(void ** in, int* resultState,int* resultLen) {
     Json::Value instruction;
-    
     instruction = getJson('s',(std::string*)in);
-    l(instruction.toStyledString());
-    if(instruction.compare(A_GET_INFO) == 0) {
-        
+    std::string action = instruction["action"].asString();    
+    if(action.compare("connect") == 0) {
+        if(instruction["data"]["type"] == sensType::TERMINAL)
+            Synapsis::sensors.push_back(Sensor("a", sensType::TERMINAL));
+        l("Sensor: TERMINAL");
     }
+    
     return NULL; 
 }
