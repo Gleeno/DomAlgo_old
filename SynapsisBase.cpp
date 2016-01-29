@@ -53,8 +53,10 @@ Json::Value SynapsisBase::getJson(char type, std::string* sourceOrPath){
         }
     }
     else {
-         if(!r.parse(*sourceOrPath,v,false))
-                throw(errno);
+         if(!r.parse(*sourceOrPath,v,false)) {
+             lall("Instruction in bad format ( no json ). Exit");
+             throw(errno);
+         }
     }
     return v;
 }
