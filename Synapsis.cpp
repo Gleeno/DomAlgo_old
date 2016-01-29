@@ -104,6 +104,6 @@ unsigned char* Synapsis::parseInstruction(void ** in, int* resultState,int* resu
             Synapsis::sensors.push_back(Sensor("a", sensType::TERMINAL));
         l("Sensor: TERMINAL");
     }
-    
+     
     return NULL; 
 }
