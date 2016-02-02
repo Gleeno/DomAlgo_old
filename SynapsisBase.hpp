@@ -22,7 +22,7 @@ public:
     static Json::Value getJson(char type,std::string* sourceOrPath);
     Json::Value getSettingsRaw();
 protected:
-    Json::Value settingsRaw;
+    static Json::Value settingsRaw;
 };
 
 #endif	/* SYNAPSISBASE_HPP */

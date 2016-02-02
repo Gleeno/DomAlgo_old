@@ -1,15 +1,15 @@
 {   
-    "NAME": "Domalgo",
-    "VERSION": "0.1",
     "LOAD_CONFIG" : "loadConfig",
     "CONFIG_PATH" : "configs/",
     "WS_ADDRESS": "ws://127.0.0.1:",
-    
     "WS_PORT": 9002,    
     "WS_PROTOCOL": "instruction_protocol",
-    "action": [
-            {"A_UPDATE" : "update" },
-            {"A_GET_DATA" : "getData"},
-            {"A_SET_DATA" : "setData"}
-    ]  
+    "N_INSTRUCTION_NOT_DEFINED" : 0,
+    "N_BAD_INSTRUCTION" : -1,
+    "IP_ADDRESS_LENGHT" : 16,
+    "CLIENT_NAME_LENGHT" : 64,
+    "A_PAIRING" : "pairing" ,
+    "A_GET_DATA_SENSOR" : "getDataSensor",
+    "TEXT_FORMAT" : 1,
+    "BINARY_FORMAT" : 2
 }

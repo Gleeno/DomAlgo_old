@@ -7,6 +7,7 @@
 
 #include "SynapsisBase.hpp"
 
+Json::Value SynapsisBase::settingsRaw;
 SynapsisBase::SynapsisBase() {
     std::string configFile = "configs/default.json";
     this->settingsRaw = this->getJson( 'f', &configFile );

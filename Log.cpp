@@ -8,6 +8,7 @@
 void l(std::string text) {
     std::cout << "** " << text <<" **" << std::endl;
 }
+
 void lf(std::string text, std::string fileName, std::string path) {
     time_t t= time(0);
     struct tm * now = localtime( & t );

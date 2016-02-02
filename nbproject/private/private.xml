@@ -8,10 +8,14 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/home/teo/Dropbox/tosave/DomAlgo/Synapsis.cpp</file>
-            <file>file:/home/teo/Dropbox/tosave/DomAlgo/.git/config</file>
+            <file>file:/home/teo/Dropbox/tosave/DomAlgo/logs/log</file>
+            <file>file:/home/teo/Dropbox/tosave/DomAlgo/Gui/index.html</file>
+            <file>file:/home/teo/Dropbox/tosave/DomAlgo/configs/default.json</file>
             <file>file:/home/teo/Dropbox/tosave/DomAlgo/Synapsis/sensor/Sensor.hpp</file>
+            <file>file:/home/teo/Dropbox/tosave/DomAlgo/Synapsis/message/en.hpp</file>
             <file>file:/home/teo/Dropbox/tosave/DomAlgo/Synapsis.hpp</file>
             <file>file:/home/teo/Dropbox/tosave/DomAlgo/Synapsis/sensor/Sensor.cpp</file>
+            <file>file:/home/teo/Dropbox/tosave/DomAlgo/Log.cpp</file>
         </group>
     </open-files>
 </project-private>

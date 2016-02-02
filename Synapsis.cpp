@@ -6,7 +6,7 @@
  */
 
 #include "Synapsis.hpp"
-std::vector<Sensor> Synapsis::sensors;
+std::vector<Sensor*> Synapsis::sensors;
 Synapsis::Synapsis() {
 }
 
@@ -61,25 +61,32 @@ int Synapsis::connect(std::string address, int port){
                          enum lws_callback_reasons reason, void *user,
                          void *in, size_t len)
 {
-  int resultState = -10;
-  int resultLen;
-  unsigned char * data;
-  int dataW;
+    int resultState = -10;
+    int resultLen;
+    unsigned char * data;
+    int dataW;
+    char name[settingsRaw["CLIENT_NAME_LENGHT"].asInt()];
+    char ip[settingsRaw["IP_ADDRESS_LENGHT"].asInt()];
+    lws_get_peer_addresses(wsi,lws_get_socket_fd(wsi),
+            name, sizeof(name),
+            ip,sizeof(ip));
   switch (reason){    
     case LWS_CALLBACK_ESTABLISHED:
-      l(L_CONNECTED);
+        std::cout << "Client connected. Ip: " << ip <<" Name: " << name << std::endl;
       break;
     case LWS_CALLBACK_RECEIVE:
-      data = parseInstruction(&in, &resultState, &resultLen);  
+      data = parseInstruction(&in, &resultState, &resultLen,(std::string) name,(std::string)ip); 
       if(resultState == 1) {
-         dataW = lws_write(wsi, &data[LWS_SEND_BUFFER_PRE_PADDING], resultLen, LWS_WRITE_TEXT);  
-         lall( L_DATA_SENT  +  dataW );
+         dataW = lws_write(wsi, &data[LWS_SEND_BUFFER_PRE_PADDING],
+                resultLen, LWS_WRITE_TEXT);  
+         l( L_DATA_SENT);
       }
       else if(resultState == 2) {
-        dataW = lws_write(wsi, &data[LWS_SEND_BUFFER_PRE_PADDING], resultLen, LWS_WRITE_BINARY);  
+        dataW = lws_write(wsi, &data[LWS_SEND_BUFFER_PRE_PADDING], 
+                resultLen, LWS_WRITE_BINARY);  
         //lall("Data w " + dataW + ". RESULT: binary data");
       }
-      else lall(L_INVALID_INSTRUCTION + resultState);
+      else l(L_INVALID_INSTRUCTION );
       break;
     default:
       break;
@@ -95,15 +102,82 @@ int Synapsis::connect(std::string address, int port){
      return 0;
 }
  
-unsigned char* Synapsis::parseInstruction(void ** in, int* resultState,int* resultLen) {
+unsigned char* Synapsis::parseInstruction(void ** in, int* resultState,int* resultLen,
+    std::string clientName, std::string clientIp) {
     Json::Value instruction;
     instruction = getJson('s',(std::string*)in);
-    std::string action = instruction["action"].asString();    
-    if(action.compare("connect") == 0) {
-        if(instruction["data"]["type"] == sensType::TERMINAL)
-            Synapsis::sensors.push_back(Sensor("a", sensType::TERMINAL));
-        l("Sensor: TERMINAL");
+    unsigned char* result;
+    std::vector<unsigned char> buf;
+    std::string msg;
+    msg.clear();
+    if(isSynapsisInstruction(&instruction)) {
+        sensType type = (sensType)instruction["type"].asInt();
+        std::string action = instruction["action"].asString(); 
+        if(action.compare(settingsRaw["A_PAIRING"].asString()) == 0) {
+            if(!isPaired(instruction["id"].asString())) {
+                if(type == sensType::TERMINAL) {
+                    sensors.push_back(new Sensor(instruction["id"].asString(),
+                            (sensType)instruction["type"].asInt(),
+                            clientName, clientIp));
+                    msg=L_SUCCESS;
+                }
+            }
+            else
+                msg=L_SENSOR_JUST_PAIRED;
+            *resultState=settingsRaw["TEXT_FORMAT"].asInt();
+        }
+        else if(action.compare(settingsRaw["A_GET_DATA_SENSOR"].asString())) {
+            if(isPaired(instruction["id"].asString())) {
+                msg = "valOf1";
+            }
+            else
+                msg=L_SENSOR_NOT_PAIRED;
+            *resultState = settingsRaw["TEXT_FORMAT"].asInt();
+        }
+        else {
+            *resultState =  settingsRaw["N_INSTRUCTION_NOT_DEFINED"].asInt();
+            msg = L_INSTRUCTION_NOT_DEFINED;
+        }
     }
-     
-    return NULL; 
+    else *resultState = settingsRaw["N_BAD_INSTRUCTION"].asInt();
+    if(*resultState == 2) *resultLen = buf.size();
+    else *resultLen = msg.length();
+    result = (unsigned char* ) malloc(*resultLen + LWS_SEND_BUFFER_PRE_PADDING + LWS_SEND_BUFFER_POST_PADDING);
+    memset(result,0,*resultLen + LWS_SEND_BUFFER_PRE_PADDING + LWS_SEND_BUFFER_POST_PADDING);
+    switch(*resultState) {
+        case 1:
+            memcpy(result+ LWS_SEND_BUFFER_PRE_PADDING,(unsigned char*)msg.c_str(), *resultLen); 
+            break;
+        case 2:
+            std::cout << "Image size: " << *resultLen  << std::endl;
+            memcpy(result+ LWS_SEND_BUFFER_PRE_PADDING,buf.data(), *resultLen);
+            break;  
+        default:
+            memcpy(result+ LWS_SEND_BUFFER_PRE_PADDING,(unsigned char*)msg.c_str(), *resultLen); 
+            break;
+    } 
+    return result;  
 }
+
+bool Synapsis::isSynapsisInstruction(Json::Value* instruction) {
+    if( instruction->isNull() ||
+        instruction->empty() ||
+        (!instruction->isMember("action")) ||
+        (!instruction->isMember("data")) ||
+        (!instruction->isMember("id")) ||
+        (!instruction->isMember("type"))
+      ) {
+            l(L_WRONG_INSTRUCTION_FORMAT);
+            return false;
+        }
+    l(L_RIGHT_INSTRUCTION_FORMAT);
+    return true;
+}
+
+ bool Synapsis::isPaired(std::string sensorId) {
+        for(int i = 0; i< sensors.size();i++) {
+            if (sensors[i]->getId().compare(sensorId) ==0)
+                return true;
+        }
+        return false;
+    }

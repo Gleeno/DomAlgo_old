@@ -16,9 +16,8 @@ angular.module("mainApp",[])
                     var w = new WebSocket(res.sets.WS_ADDRESS + res.sets.WS_PORT,res.sets.WS_PROTOCOL);
                     res.w = w;
                     res.w.onopen=function(evt) {
-                        def2.resolve(res);
-                        res.w.send(JSON.stringify({ action : "connect"}, "data : [{type: 'terminal'}]"));
-                    };
+                        def2.resolve(res);                      
+                    };                    
                     return def2.promise;
                 }).then(function(result) {
                     defered.resolve(res);       
@@ -29,18 +28,30 @@ angular.module("mainApp",[])
         
    })
    .controller('ctrl', function ($rootScope,$scope,$http,$q,initServices) {
-       initServices.init().then(function(result) {
-           $scope.settings = result.sets;
-           $scope.ws = result.w;   
+        initServices.init().then(function(result) {
+            $scope.settings = result.sets;
+            $scope.ws = result.w;
+            var msg = {
+                        action: $scope.settings.A_PAIRING,
+                        id : "term01",
+                        type : 5, // TERMINAL
+                        data: {}
+                       };
+                       l( msg.action);
+            $scope.ws.send(JSON.stringify(msg));
            $scope.ws.onclose = function(evt) {
                $scope.$digest();
-                    l("Ws closed. ReadyState: "+$scope.ws.readyState);
+               l("Ws closed. ReadyState: "+$scope.ws.readyState);
                 };
             $scope.ws.onerror = function(evt) {
                $scope.$digest();
                     l("Ws error. ReadyState: "+$scope.ws.readyState);
                 };
-            
+            $scope.ws.onmessage = function(msg) {
+                l(msg.data);
+                $scope.lastMsg = msg.data;
+                $scope.$digest();
+            }
        });
    });
         

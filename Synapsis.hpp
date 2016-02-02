@@ -13,6 +13,7 @@
 #include "SynapsisBase.hpp"
 #include <vector>
 #include "Synapsis/sensor/Sensor.hpp"
+#include <unistd.h> //sleep
 
 class Synapsis : public SynapsisBase {
 public:   
@@ -33,11 +34,14 @@ public:
                          enum lws_callback_reasons reason, void *user,
                          void *in, size_t len);
     struct lws_context *context;
-    static unsigned char* parseInstruction(void ** in, int* resultState,int* resultLen);
+    static unsigned char* parseInstruction(void ** in, int* resultState,int* resultLen,
+            std::string clientName, std::string clientIp);
+    static bool isSynapsisInstruction(Json::Value * instruction);
+    static bool isPaired(std::string sensorId);
+    static std::vector<Sensor*> sensors;
 private:
     std::string wsAddress;
     int wsPort;
-    static std::vector<Sensor> sensors;
+    
 };
 #endif	/* SYNAPSIS_HPP */
-
