@@ -1,10 +1,10 @@
 #include <ESP8266WiFi.h>
 #include <WebSocketClient.h>
 
-const char* ssid     = "domalgo";
-const char* password = "domalgo123";
+const char* ssid     = "lallo";
+const char* password = "import123";
 char path[] = "/";
-char host[] = "192.168.41.1";
+char host[] = "192.168.1.10";
 char protocol[] ="instruction_protocol";
   
 WebSocketClient webSocketClient;
@@ -39,7 +39,7 @@ void setup() {
   
 
   // Connect to the websocket server
-  if (client.connect("192.168.41.1", 9002)) {
+  if (client.connect(host, 9002)) {
     Serial.println("Connected");
   } else {
     Serial.println("Connection failed.");
@@ -54,6 +54,8 @@ void setup() {
   webSocketClient.protocol = protocol;
   if (webSocketClient.handshake(client)) {
     Serial.println("Handshake successful");
+    String data = String("ghu");
+    webSocketClient.sendData(data);
   } else {
     Serial.println("Handshake failed.");
     while(1) {
@@ -74,9 +76,6 @@ void loop() {
       Serial.print("Received data: ");
       Serial.println(data);
     }
-    
-    data = String("{ action : sensorInit }");
-    webSocketClient.sendData(data);
     
   } else {
     Serial.println("Client disconnected.");

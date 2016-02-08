@@ -1,8 +1,15 @@
 <html>
     <head>
         <title>Login</title>
+        
     </head>
     <body>
-        
+        <script>
+            var ws = new WebSocket("ws://192.168.1.40:7681");
+            ws.onopen = function(evt) {
+                console.log("open with readyState " + ws.readyState);
+                ws.send("asdrfffff");
+            }
+        </script>
     </body>
 </html>

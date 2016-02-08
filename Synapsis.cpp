@@ -19,13 +19,13 @@ Synapsis::~Synapsis() {
 int Synapsis::connect(std::string address, int port){
     this->wsAddress = address;
     this->wsPort=port;
-    l("start connect: address=" + address + " and port="+std::to_string(port));
+    l("Server connection: address: " + address + ". Port: "+std::to_string(port));
     
     /* libwebsocket start */    
     struct lws_context_creation_info info;
     static struct lws_protocols protocols[] ={
         { "http-only", callback_http, 0 },
-        { "instruction_protocol",callback_instruction, 0, 200000 },
+        { "instruction_protocol",callback_instruction, 0, 3000000},
         {"streaming_protocol", callback_streaming, 0},
         { NULL, NULL, 0 }
     };
@@ -86,8 +86,11 @@ int Synapsis::connect(std::string address, int port){
                 resultLen, LWS_WRITE_BINARY);  
         //lall("Data w " + dataW + ". RESULT: binary data");
       }
-      else l(L_INVALID_INSTRUCTION );
+      else l((std::string)L_INVALID_INSTRUCTION );
+      std::cout << "Result of parse instruction: " << resultState << std::endl;
       break;
+      case LWS_EXT_CALLBACK_PACKET_RX_PREPARSE:
+          break;
     default:
       break;
     }
@@ -104,12 +107,16 @@ int Synapsis::connect(std::string address, int port){
  
 unsigned char* Synapsis::parseInstruction(void ** in, int* resultState,int* resultLen,
     std::string clientName, std::string clientIp) {
+    std::string *a = (std::string*)in;
+    std::cout << "Instr: size=" << a->length() << " and cont=" << *a <<  std::endl;
     Json::Value instruction;
     instruction = getJson('s',(std::string*)in);
+    std::cout << "Raw inst.: " << instruction.toStyledString() << std::endl;
     unsigned char* result;
     std::vector<unsigned char> buf;
     std::string msg;
     msg.clear();
+    
     if(isSynapsisInstruction(&instruction)) {
         sensType type = (sensType)instruction["type"].asInt();
         std::string action = instruction["action"].asString(); 
@@ -126,9 +133,10 @@ unsigned char* Synapsis::parseInstruction(void ** in, int* resultState,int* resu
                 msg=L_SENSOR_JUST_PAIRED;
             *resultState=settingsRaw["TEXT_FORMAT"].asInt();
         }
-        else if(action.compare(settingsRaw["A_GET_DATA_SENSOR"].asString())) {
+        else if(action.compare(settingsRaw["A_GET_DATA_SENSOR"].asString()) ==0) {
             if(isPaired(instruction["id"].asString())) {
                 msg = "valOf1";
+                std::cout << "label" << std::endl;
             }
             else
                 msg=L_SENSOR_NOT_PAIRED;
@@ -142,8 +150,8 @@ unsigned char* Synapsis::parseInstruction(void ** in, int* resultState,int* resu
     else *resultState = settingsRaw["N_BAD_INSTRUCTION"].asInt();
     if(*resultState == 2) *resultLen = buf.size();
     else *resultLen = msg.length();
-    result = (unsigned char* ) malloc(*resultLen + LWS_SEND_BUFFER_PRE_PADDING + LWS_SEND_BUFFER_POST_PADDING);
-    memset(result,0,*resultLen + LWS_SEND_BUFFER_PRE_PADDING + LWS_SEND_BUFFER_POST_PADDING);
+    result = (unsigned char* ) malloc(*resultLen + LWS_SEND_BUFFER_PRE_PADDING);
+    memset(result,0,*resultLen + LWS_SEND_BUFFER_PRE_PADDING);
     switch(*resultState) {
         case 1:
             memcpy(result+ LWS_SEND_BUFFER_PRE_PADDING,(unsigned char*)msg.c_str(), *resultLen); 

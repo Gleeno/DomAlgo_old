@@ -16,7 +16,8 @@ angular.module("mainApp",[])
                     var w = new WebSocket(res.sets.WS_ADDRESS + res.sets.WS_PORT,res.sets.WS_PROTOCOL);
                     res.w = w;
                     res.w.onopen=function(evt) {
-                        def2.resolve(res);                      
+                        def2.resolve(res);  
+                        l("Connection opened.");
                     };                    
                     return def2.promise;
                 }).then(function(result) {
@@ -35,9 +36,11 @@ angular.module("mainApp",[])
                         action: $scope.settings.A_PAIRING,
                         id : "term01",
                         type : 5, // TERMINAL
-                        data: {}
+                        data: {
+                            sensor: "all"
+                        }
                        };
-                       l( msg.action);
+                       l("Action request: "+ msg.action);
             $scope.ws.send(JSON.stringify(msg));
            $scope.ws.onclose = function(evt) {
                $scope.$digest();
@@ -48,7 +51,7 @@ angular.module("mainApp",[])
                     l("Ws error. ReadyState: "+$scope.ws.readyState);
                 };
             $scope.ws.onmessage = function(msg) {
-                l(msg.data);
+                l("Message received: "+ msg.data);
                 $scope.lastMsg = msg.data;
                 $scope.$digest();
             }
