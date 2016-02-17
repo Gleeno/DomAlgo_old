@@ -1,8 +1,10 @@
 {   
+    "NAME" : "Domalgo",
+    "VERSION" : "0.1",
     "LOAD_CONFIG" : "loadConfig",
     "CONFIG_PATH" : "configs/",
     "WS_ADDRESS": "ws://127.0.0.1:",
-    "WS_PORT": 8080,    
+    "WS_PORT": 9002,    
     "WS_PROTOCOL": "instruction_protocol",
     "N_INSTRUCTION_NOT_DEFINED" : 0,
     "N_BAD_INSTRUCTION" : -1,

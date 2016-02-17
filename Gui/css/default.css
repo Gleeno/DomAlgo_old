@@ -1,0 +1,10 @@
+/* line 1, sass/default.scss */
+.log {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  border: none;
+  width: 100%;
+  text-overflow: ellipsis;
+  overflow-y: hidden;
+  font-size: 0.8em;
+}

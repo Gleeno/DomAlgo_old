@@ -25,7 +25,7 @@ int Synapsis::connect(std::string address, int port){
     struct lws_context_creation_info info;
     static struct lws_protocols protocols[] ={
         { "http-only", callback_http, 0 },
-        { "instruction_protocol",callback_instruction, 0, 3000000},
+        { "instruction_protocol",callback_instruction, 0},
         {"streaming_protocol", callback_streaming, 0},
         { NULL, NULL, 0 }
     };
@@ -67,12 +67,12 @@ int Synapsis::connect(std::string address, int port){
     int dataW;
     char name[settingsRaw["CLIENT_NAME_LENGHT"].asInt()];
     char ip[settingsRaw["IP_ADDRESS_LENGHT"].asInt()];
-    lws_get_peer_addresses(wsi,lws_get_socket_fd(wsi),
-            name, sizeof(name),
-            ip,sizeof(ip));
-  switch (reason){    
+    //lws_get_peer_addresses(wsi,lws_get_socket_fd(wsi),
+    //        name, sizeof(name),
+    //        ip,sizeof(ip));
+  switch (reason){   
     case LWS_CALLBACK_ESTABLISHED:
-        std::cout << "Client connected. Ip: " << ip <<" Name: " << name << std::endl;
+        std::cout << "Connected" << std::endl;
       break;
     case LWS_CALLBACK_RECEIVE:
       data = parseInstruction(&in, &resultState, &resultLen,(std::string) name,(std::string)ip); 
@@ -89,8 +89,7 @@ int Synapsis::connect(std::string address, int port){
       else l((std::string)L_INVALID_INSTRUCTION );
       std::cout << "Result of parse instruction: " << resultState << std::endl;
       break;
-      case LWS_EXT_CALLBACK_PACKET_RX_PREPARSE:
-          break;
+     
     default:
       break;
     }
