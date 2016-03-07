@@ -1,3 +1,4 @@
+body { padding-top: 50px; }
 .log {
     margin-top: 20px;
     margin-bottom:10px;
@@ -6,4 +7,7 @@
     text-overflow:ellipsis;
     overflow-y:hidden;
     font-size: 0.8em;
+}
+.bbk {
+    border:solid 1px black;
 }

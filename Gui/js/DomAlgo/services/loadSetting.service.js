@@ -4,7 +4,7 @@ angular
 loadSetting.$inject=["$http"];
 
 function loadSetting(http) {
-    return { getSetting : getSetting };
+    return { getSetting : getSetting, test: "test" };
     
     function getSetting() {
         return http.get("configs/default.json")

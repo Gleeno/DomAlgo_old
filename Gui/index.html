@@ -1,37 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="js/jquery-2.1.4.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
-        <script src="js/angular-1.5.0/angular.js"></script>
-        <script src="js/DomAlgo/DomAlgo.js"></script>
-        <script src="js/angular-1.5.0/angular-route.js"></script>
-        <script src="js/DomAlgo/services/getWs.service.js"></script>
-        <script src="js/DomAlgo/services/loadSetting.service.js"></script>
-        <script src="js/DomAlgo/controllers/realTime.js"></script>
         <link rel="stylesheet" href="css/bootstrap.min.css"/>
         <link rel="stylesheet" href="css/bootstrap-theme.min.css"/>
         <link rel="stylesheet" href="css/default.css" />
     </head>
-    <body ng-app="DomAlgo" ng-strict-di>
-            <nav class="navbar  navbar-fixed-top navbar-inverse" style="margin-bottom: 80px">
-                <div class="container">
-                    <div class="navbar-header col-md-2">
+    <body ng-app="DomAlgo">
+        <div class="container"><!-- START container -->
+            <nav class="navbar  navbar-fixed-top navbar-inverse"><!-- START main navbar -->
+                <div class="container"><!-- START main navbar container -->
+                    <div class="navbar-header col-md-2"><!-- START info -->
                         <a class="navbar-brand" href="#">{{settings.NAME}} {{settings.VERSION}}</a>
-                    </div>
+                    </div><!-- END info -->
                     <ul class="nav navbar-nav">
                         <li role="presentation" class="active "><a href="#realTime">Real time</a></li>
                         <li role="presentation"><a href="#stats">Stats</a></li>
                         <li role="presentation"><a href="#behaviour">Behaviour</a></li>
                         <li role="presentation"><a href="#settings">Settings</a></li>
-                       
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li>
                             <a href="#">
-                                <img ng-show="loadingState" src="images/loading.gif" alt="loader" height="20px"
-                                    />
+                                <img ng-show="loadingState" src="images/loading.gif" alt="loader" height="20px"/>
                             </a>
                         </li>
                         <li class="dropdown">
@@ -45,13 +39,18 @@
                             </ul>
                         </li>
                     </ul>
-                    <div ng-view>
-                        ss
-                    </div>
-                </div><!-- fine container -->
-            </nav>
-            <footer>
-            </footer>
-        
+                </div><!-- END main navbar container -->
+            </nav><!-- END main navbar -->
+            <div class="content"><!-- START content -->
+                    <div ng-view></div>
+            </div><!-- END content -->
+        </div><!-- END container -->
+        <script src="js/angular-1.5.0/angular.js"></script>
+        <script src="js/angular-1.5.0/angular-route.js"></script>
+        <script src="js/DomAlgo/DomAlgo.js"></script>
+        <script src="js/DomAlgo/services/getWs.service.js"></script>
+        <script src="js/DomAlgo/services/loadSetting.service.js"></script>
+        <script src="js/DomAlgo/services/DomAlgoInstruction.js"></script>
+        <script src="js/DomAlgo/controllers/realTime.js"></script>
     </body>
 </html>

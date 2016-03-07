@@ -8,7 +8,6 @@
 #include "Log.hpp"
 #include "Camera.hpp"
 int main(int argc, char** argv) {
-    lall("INIT");
     Synapsis *wsI = new Synapsis();
     wsI->connect("127.0.0.1",9002);
     while (1) {

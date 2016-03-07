@@ -1,4 +1,9 @@
 /* line 1, sass/default.scss */
+body {
+  padding-top: 50px;
+}
+
+/* line 2, sass/default.scss */
 .log {
   margin-top: 20px;
   margin-bottom: 10px;
@@ -7,4 +12,9 @@
   text-overflow: ellipsis;
   overflow-y: hidden;
   font-size: 0.8em;
+}
+
+/* line 11, sass/default.scss */
+.bbk {
+  border: solid 1px black;
 }

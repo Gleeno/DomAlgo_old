@@ -13,4 +13,8 @@
 #define L_INSTRUCTION_NOT_DEFINED "Instruction not defined"
 #define L_SENSOR_JUST_PAIRED "Sensor just paired."
 #define L_SENSOR_NOT_PAIRED "Sensor not paired"
+#define L_SENSOR_TYPE_UNKNOWN "Sensor type unknown"
+#define L_SENSOR_PAIRED_SUCCESS "Sensor paired successfully"
+#define L_NO_SENSORS "No Sensors"
+#define L_OP_FAILED "Operation failed"
 #endif

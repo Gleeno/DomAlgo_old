@@ -1,1 +1,12 @@
-dsadsadsaciao
+<h1>RealTime</h1>
+<div ng-repeat="sensor in sensors" class="col-md-3 bbk"><!-- START sensor main cont -->
+    <div class="col-md-12"><!-- START title -->
+        <h3>Sensor id: {{sensor.id}}</h3> 
+    </div><!-- END title -->
+    <div class="col-md-3"><!-- START label -->
+        Val
+    </div><!-- END label -->
+    <div class="col-md-9"><!-- START Value -->
+        {{sensor.data}}
+    </div><!-- END Value -->    
+</div><!-- END sensor main cont -->

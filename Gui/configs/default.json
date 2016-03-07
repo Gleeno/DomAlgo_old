@@ -12,6 +12,12 @@
     "CLIENT_NAME_LENGHT" : 64,
     "A_PAIRING" : "pairing" ,
     "A_GET_DATA_SENSOR" : "getDataSensor",
+    "A_NOTIFY" : "notify",
     "TEXT_FORMAT" : 1,
-    "BINARY_FORMAT" : 2
+    "BINARY_FORMAT" : 2,
+    "N_SUCCESS" : 1,
+    "N_FAILED" : -1,
+    "ALL" : "all"   ,
+    "alt": { "action": "getDataSensor", "data": { "action": "getDataSensor", "id": "all", "type": "1", "data":{"sensor": { "ip": "2344", "name": "anme", "id": "all", "type": "1", "spec": {"switchState": "0" } } }}, "type": "1", "id": "all"}
 }
+

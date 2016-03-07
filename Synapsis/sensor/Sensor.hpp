@@ -15,22 +15,27 @@ enum sensType {
   ADV_KNOB_TUNER,
   ADV_SWITCH,
   SIMPLE_CAMERA, //INPUT
-  TERMINAL  //OUTPUT
+  TERMINAL,  //OUTPUT
+  GENERIC
 };
 class Sensor {
 public:
     Sensor();
-    Sensor(std::string, sensType, std::string name, std::string ip);
+    Sensor(std::string id, sensType type, std::string name, std::string ip);
     virtual ~Sensor();
+    virtual Json::Value getDataSensor();
     sensType getType();
     std::string getId();
-    int getVal();
+    std::string getIp();
+    std::string getName();
+    int getWifiSignal();
+    
 private:
     std::string id;
     sensType type;
     std::string name;
     std::string ip;
-    int value;
+    int wifiSignal; // wifi signal strong
 };
 
 #endif	/* SENSOR_HPP */
