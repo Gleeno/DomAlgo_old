@@ -1,6 +1,10 @@
 # DomAlgo
-A remote home automation system
-DomAlgo is a project that include:
-- Client page (AngularJS, HTML, CSS)
-- Server software ( C++, libWebSockets, libOpenCV )
-- d
+DomAlgo is a remote home automation system that include:
+- Client page
+- Server software
+- Operating System 
+- Firmware for sensors
+- Assembly instruction for sensors
+- Documentation
+
+it's Open Source and open hardware project, 
