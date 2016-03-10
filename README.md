@@ -3,8 +3,6 @@ DomAlgo is a remote home automation system that include:
 - Client page
 - Server software
 - Operating System 
-- Firmware for sensors
-- Assembly instruction for sensors
+- Sensor firmware
 - Documentation
-
-it's Open Source and open hardware project, 
+It's covered by GPLv3 license, copyright 2015 of Matteo Di Carlo
